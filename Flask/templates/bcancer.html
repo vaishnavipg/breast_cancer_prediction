@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Microscopic Image Classifier</title>
+</head>
+<body>
+    <h1>Microscopic Image Classifier</h1>
+
+    <form id="uploadForm" action="http://127.0.0.1:5000/predict" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <button type="submit">Upload</button>
+    </form>
+
+    <div id="predictionResult">
+        <!-- The prediction result will be displayed here -->
+    </div>
+
+    <script>
+        // Add event listener for form submission
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Create FormData object to send the image file
+            var formData = new FormData(this);
+
+            // Send the POST request to the Flask app
+            console.log("post called");
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(function(response) {
+                console.log(response);
+                return response.json();
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        });
+    </script>
+</body>
+</html>
